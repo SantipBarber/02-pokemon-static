@@ -1,9 +1,9 @@
 ---
 // Código Server Side Only - Momento de construcción BUILD TIME
 import type { GetStaticPaths } from "astro";
-import type { PokemonListResponse } from "../../interfaces/pokemon-list";
-import PokemonCard from "../../components/pokemons/PokemonCard.astro";
-import MainLayout from "../../layouts/MainLayout.astro";
+import type { PokemonListResponse } from "@interfaces/pokemon-list";
+import PokemonCard from "@components/pokemons/PokemonCard.astro";
+import MainLayout from "@layouts/MainLayout.astro";
 
 export const getStaticPaths = (async ({ paginate }) => {
   const resp = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");

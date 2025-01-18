@@ -8,24 +8,22 @@ export const getStaticPaths = (async () => {
   const resp = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
   const { results } = (await resp.json()) as PokemonListResponse;
 
-  return results.map(({ name, url }) => ({
-    params: { name: name },
-    props: { name: name, url: url },
-  }));
+  return results.map(({ name, url }) => {
+    const id = url.split("/").at(-2);
+    return {
+      params: { id: id },
+      props: { name: name, url: url },
+    };
+  });
 }) satisfies GetStaticPaths;
 
-const { name } = Astro.params;
-const { url } = Astro.props;
-const id = url.split("/").at(-2);
+const { id } = Astro.params;
+const { name, url } = Astro.props;
+
 const audioSrc = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${id}.ogg`;
-const imageSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
 ---
 
-<MainLayout
-  title={`Pokémon | #${id} ${name}`}
-  description={`Información sobre el Pokémon ${name}`}
-  image={imageSrc}
->
+<MainLayout title={`Pokémon | ${name}`}>
   <section class="mt-10 mx-10 flex flex-col items-center justify-center">
     <div>
       <button onclick="history.back()" class="hover:underline text-blue-500"
