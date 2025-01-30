@@ -3,7 +3,10 @@ const links = [
   { href: "/", text: "Listado" },
   { href: "/pokemons/1", text: "Paginado" },
   { href: "/favorites", text: "Favoritos" },
+  { href: '/islands', text: 'Islas' },
 ];
+
+const currentPath = Astro.url;
 ---
 
 <!-- component -->
@@ -13,13 +16,37 @@ const links = [
   >
     {
       links.map((link) => (
+        <div>
+          <a
+            href={link.href}
+            class="text-gray-200 dark:text-gray-200 mx-1.5 sm:mx-6"
+          >
+            {link.text}
+          </a>
+          {currentPath.pathname === link.href && (
+            <div
+              class="border-b-2 border-blue-500 mx-5"
+              transition:name="menu-line"
+            />
+          )}
+        </div>
+      ))
+    }
+    <!-- {
+      links.map((link) => (
         <a
           href={link.href}
-          class="text-gray-200 border-b-2 border-blue-500 mx-1.5 sm:mx-6"
+          class:list={[
+            "text-gray-200  border-blue-500 mx-1.5 sm:mx-6",
+            {
+              "text-blue-500 border-b-2 mx-1.5 sm:mx-6":
+                currentPath.pathname === link.href,
+            },
+          ]}
         >
           {link.text}
         </a>
       ))
-    }
+    } -->
   </div>
 </nav>
